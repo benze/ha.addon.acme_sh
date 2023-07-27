@@ -7,6 +7,7 @@ KEYFILE=$(bashio::config 'keyfile')
 CERTFILE=$(bashio::config 'certfile')
 DNS_PROVIDER=$(bashio::config 'dns.provider')
 DNS_ENVS=$(bashio::config 'dns.env')
+DOMAIN_ALIAS=$(bashio::config 'domainalias')
 
 for env in $DNS_ENVS; do
     export $env
@@ -20,6 +21,11 @@ done
 SERVER_ARG="zerossl"
 if [ -n "$SERVER" ]; then
     SERVER_ARG="--server $SERVER"
+fi
+
+DOMAIN_ALIAS_ARG=""
+if [ -n "$DOMAIN_ALIAS" ]; then
+    DOMAIN_ALIAS_ARG="--domain-alias $DOMAIN_ALIAS"
 fi
 
 /root/.acme.sh/acme.sh --register-account -m ${ACCOUNT} $SERVER_ARG

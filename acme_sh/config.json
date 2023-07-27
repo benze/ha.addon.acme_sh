@@ -10,9 +10,10 @@
   "init": false,
   "map": ["ssl:rw"],
   "options": {
-    "account": "str",
+    "account": null,
     "server": "zerossl",
     "domains": [null],
+    "domainalias": null,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "dns": {}
@@ -21,6 +22,7 @@
     "account": "str",
     "server": "str",
     "domains": ["str"],
+    "domainalias": "str?",
     "certfile": "str",
     "keyfile": "str",
     "dns": {
