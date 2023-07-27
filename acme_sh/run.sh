@@ -32,7 +32,8 @@ fi
 
 /root/.acme.sh/acme.sh --issue "${DOMAIN_ARR[@]}" \
 --dns "$DNS_PROVIDER" \
-$SERVER_ARG
+$SERVER_ARG \
+$DOMAIN_ALIAS_ARG
 
 /root/.acme.sh/acme.sh --install-cert "${DOMAIN_ARR[@]}" \
 --fullchain-file "/ssl/${CERTFILE}" \
