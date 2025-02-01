@@ -10,11 +10,6 @@ DNS_ENVS=$(bashio::config 'dns.env')
 DOMAIN_ALIAS=$(bashio::config 'domain_alias')
 ACME_HOME=$(bashio::config 'data_folder' '/data')
 
-set -x
-
-echo alias: $DOMAIN_ALIAS
-echo home: $ACME_HOME
-
 export ACME_HOME=$ACME_HOME
 
 for env in $DNS_ENVS; do
@@ -27,14 +22,12 @@ for domain in $DOMAINS; do
 done
 
 SERVER_ARG="zerossl"
-if [ -n "$SERVER" ]; then
+if bashio::config.has_value 'server'; then
     SERVER_ARG="--server $SERVER"
 fi
 
 DOMAIN_ALIAS_ARG=""
-# if bashio::config.is_empty "domainalias" ; then
-if [[ -n $DOMAIN_ALIAS ]]; then
-    echo DOMAIN ALIAS:: --$DOMAIN_ALIAS--
+if bashio::config.has_value 'domain_alias'; then
     DOMAIN_ALIAS_ARG="--domain-alias $DOMAIN_ALIAS"
 fi
 
