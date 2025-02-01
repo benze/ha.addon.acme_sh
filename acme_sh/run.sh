@@ -10,6 +10,9 @@ DNS_ENVS=$(bashio::config 'dns.env')
 DOMAIN_ALIAS=$(bashio::config 'domainalias')
 ACME_HOME=$(bashio::config 'data_folder' || echo "/data")
 
+echo alias: $DOMAIN_ALIAS
+echo home: $ACME_HOME
+
 export ACME_HOME
 
 for env in $DNS_ENVS; do
