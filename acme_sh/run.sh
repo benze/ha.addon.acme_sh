@@ -1,7 +1,5 @@
 #!/usr/bin/with-contenv bashio
 
-set -x
-
 ACCOUNT=$(bashio::config 'account')
 SERVER=$(bashio::config 'server')
 DOMAINS=$(bashio::config 'domains')
@@ -16,6 +14,7 @@ echo alias: $DOMAIN_ALIAS
 echo home: $ACME_HOME
 
 export $ACME_HOME
+set -x
 
 for env in $DNS_ENVS; do
     export $env
