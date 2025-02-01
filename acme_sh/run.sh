@@ -31,7 +31,8 @@ if [ -n "$SERVER" ]; then
 fi
 
 DOMAIN_ALIAS_ARG=""
-if [ bashio::config.is_empty( "domainalias") ]; then
+# if bashio::config.is_empty "domainalias" ; then
+if [ -n "$DOMAIN_ALIAS" ] ; then
     DOMAIN_ALIAS_ARG="--domain-alias $DOMAIN_ALIAS"
 fi
 
