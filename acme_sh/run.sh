@@ -7,7 +7,7 @@ KEYFILE=$(bashio::config 'keyfile')
 CERTFILE=$(bashio::config 'certfile')
 DNS_PROVIDER=$(bashio::config 'dns.provider')
 DNS_ENVS=$(bashio::config 'dns.env')
-DOMAIN_ALIAS=$(bashio::config 'domainalias')
+DOMAIN_ALIAS=$(bashio::config 'domainalias' null)
 ACME_HOME=$(bashio::config 'data_folder' '/data')
 
 echo alias: $DOMAIN_ALIAS
