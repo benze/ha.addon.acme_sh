@@ -10,12 +10,12 @@ CERTFILE=$(bashio::config 'certfile')
 DNS_PROVIDER=$(bashio::config 'dns.provider')
 DNS_ENVS=$(bashio::config 'dns.env')
 DOMAIN_ALIAS=$(bashio::config 'domainalias')
-ACME_HOME=$(bashio::config 'data_folder' || echo "/data")
+ACME_HOME=$(bashio::config 'data_folder' '/data')
 
 echo alias: $DOMAIN_ALIAS
 echo home: $ACME_HOME
 
-export ACME_HOME
+export $ACME_HOME
 
 for env in $DNS_ENVS; do
     export $env
@@ -32,7 +32,7 @@ if [ -n "$SERVER" ]; then
 fi
 
 DOMAIN_ALIAS_ARG=""
-if [ -n "$DOMAIN_ALIAS" ]; then
+if [ bashio::config.is_empty( "domainalias") ]; then
     DOMAIN_ALIAS_ARG="--domain-alias $DOMAIN_ALIAS"
 fi
 
