@@ -13,7 +13,7 @@ ACME_HOME=$(bashio::config 'data_folder' '/data')
 echo alias: $DOMAIN_ALIAS
 echo home: $ACME_HOME
 
-export $ACME_HOME
+export ACME_HOME=$ACME_HOME
 set -x
 
 for env in $DNS_ENVS; do
