@@ -21,7 +21,7 @@
     "account": "str",
     "server": "str",
     "domains": ["str"],
-    "domainalias": "str?",
+    "domain_alias": "str?",
     "certfile": "str",
     "keyfile": "str",
     "data_folder": "str?",
