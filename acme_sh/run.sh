@@ -7,14 +7,15 @@ KEYFILE=$(bashio::config 'keyfile')
 CERTFILE=$(bashio::config 'certfile')
 DNS_PROVIDER=$(bashio::config 'dns.provider')
 DNS_ENVS=$(bashio::config 'dns.env')
-DOMAIN_ALIAS=$(bashio::config 'domain_alias' '')
+DOMAIN_ALIAS=$(bashio::config 'domain_alias' 'zzz')
 ACME_HOME=$(bashio::config 'data_folder' '/data')
+
+set -x
 
 echo alias: $DOMAIN_ALIAS
 echo home: $ACME_HOME
 
 export ACME_HOME=$ACME_HOME
-set -x
 
 for env in $DNS_ENVS; do
     export $env
