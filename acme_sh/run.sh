@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bashio
 
+set -x
+
 ACCOUNT=$(bashio::config 'account')
 SERVER=$(bashio::config 'server')
 DOMAINS=$(bashio::config 'domains')
