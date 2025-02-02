@@ -8,10 +8,13 @@ CERTFILE=$(bashio::config 'certfile')
 DNS_PROVIDER=$(bashio::config 'dns.provider')
 DNS_ENVS=$(bashio::config 'dns.env')
 DOMAIN_ALIAS=$(bashio::config 'domain_alias')
-ACME_HOME=$(bashio::config 'data_folder' '/data/acme')
+ACME_HOME=$(bashio::config 'data_folder' '/data/acme.sh')
 
-[ ! -d "$ACME_HOME" ] && mkdir -p $ACME_HOME
-bashio::log.info "Certification information written to $ACME_HOME"
+if [ ! -d "$ACME_HOME" ]; then
+    bashio::log.info "Creating $ACME_HOME folder to store certificate configuration data"
+    mkdir -p $ACME_HOME
+fi
+bashio::log.info "Certificate configuration data written to $ACME_HOME"
 
 for env in $DNS_ENVS; do
     export $env
@@ -42,3 +45,5 @@ $DOMAIN_ALIAS_ARG
 /root/.acme.sh/acme.sh --install-cert --home $ACME_HOME "${DOMAIN_ARR[@]}" \
 --fullchain-file "/ssl/${CERTFILE}" \
 --key-file "/ssl/${KEYFILE}" \
+
+[ $? -eq 0 ] && bashio::log.info "New certificate installed to /ssl/${CERTFILE}"
