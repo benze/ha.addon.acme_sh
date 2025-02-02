@@ -1,6 +1,6 @@
 {
   "name": "ACME.sh Certs (Persistence)",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "slug": "acme_sh_persist",
   "description": "Manage certificates with ACME.sh",
   "url": "https://github.com/benze/ha_addon_acme_sh",
