@@ -1,5 +1,5 @@
 {
-  "name": "Home Assistant ACME.sh Certs",
-  "url": "https://github.com/albert-anderberg/ha.addon.acme_sh",
-  "maintainer": "Albert Anderberg <albert@aanet.se>"
+  "name": "Home Assistant ACME.sh Certs (Persistence)",
+  "url": "https://github.com/benze/ha.addon.acme_sh",
+  "maintainer": "Eric Benzacar <benze@users.noreply.github.com>"
 }

@@ -7,7 +7,14 @@ KEYFILE=$(bashio::config 'keyfile')
 CERTFILE=$(bashio::config 'certfile')
 DNS_PROVIDER=$(bashio::config 'dns.provider')
 DNS_ENVS=$(bashio::config 'dns.env')
-DOMAIN_ALIAS=$(bashio::config 'domainalias')
+DOMAIN_ALIAS=$(bashio::config 'domain_alias')
+ACME_HOME=$(bashio::config 'data_folder' '/data/acme.sh')
+
+if [ ! -d "$ACME_HOME" ]; then
+    bashio::log.info "Creating $ACME_HOME folder to store certificate configuration data"
+    mkdir -p $ACME_HOME
+fi
+bashio::log.info "Certificate configuration data written to $ACME_HOME"
 
 for env in $DNS_ENVS; do
     export $env
@@ -19,24 +26,24 @@ for domain in $DOMAINS; do
 done
 
 SERVER_ARG="zerossl"
-if [ -n "$SERVER" ]; then
+if bashio::config.has_value 'server'; then
     SERVER_ARG="--server $SERVER"
 fi
 
 DOMAIN_ALIAS_ARG=""
-if [ -n "$DOMAIN_ALIAS" ]; then
+if bashio::config.has_value 'domain_alias'; then
     DOMAIN_ALIAS_ARG="--domain-alias $DOMAIN_ALIAS"
 fi
 
-/root/.acme.sh/acme.sh --register-account -m ${ACCOUNT} $SERVER_ARG
+/root/.acme.sh/acme.sh --register-account --home $ACME_HOME -m ${ACCOUNT} $SERVER_ARG
 
-/root/.acme.sh/acme.sh --issue "${DOMAIN_ARR[@]}" \
+/root/.acme.sh/acme.sh --issue --home $ACME_HOME "${DOMAIN_ARR[@]}" \
 --dns "$DNS_PROVIDER" \
 $SERVER_ARG \
 $DOMAIN_ALIAS_ARG
 
-/root/.acme.sh/acme.sh --install-cert "${DOMAIN_ARR[@]}" \
+/root/.acme.sh/acme.sh --install-cert --home $ACME_HOME "${DOMAIN_ARR[@]}" \
 --fullchain-file "/ssl/${CERTFILE}" \
 --key-file "/ssl/${KEYFILE}" \
 
-tail -f /dev/null
+[ $? -eq 0 ] && bashio::log.info "New certificate installed to /ssl/${CERTFILE}"
