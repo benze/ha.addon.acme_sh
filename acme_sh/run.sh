@@ -10,8 +10,6 @@ DNS_ENVS=$(bashio::config 'dns.env')
 DOMAIN_ALIAS=$(bashio::config 'domain_alias')
 ACME_HOME=$(bashio::config 'data_folder' '/data')
 
-export ACME_HOME=$ACME_HOME
-
 for env in $DNS_ENVS; do
     export $env
 done
@@ -31,13 +29,13 @@ if bashio::config.has_value 'domain_alias'; then
     DOMAIN_ALIAS_ARG="--domain-alias $DOMAIN_ALIAS"
 fi
 
-/root/.acme.sh/acme.sh --register-account -m ${ACCOUNT} $SERVER_ARG
+/root/.acme.sh/acme.sh --register-account --home $ACME_HOME -m ${ACCOUNT} $SERVER_ARG
 
-/root/.acme.sh/acme.sh --issue "${DOMAIN_ARR[@]}" \
+/root/.acme.sh/acme.sh --issue --home $ACME_HOME "${DOMAIN_ARR[@]}" \
 --dns "$DNS_PROVIDER" \
 $SERVER_ARG \
 $DOMAIN_ALIAS_ARG
 
-/root/.acme.sh/acme.sh --install-cert "${DOMAIN_ARR[@]}" \
+/root/.acme.sh/acme.sh --install-cert --home $ACME_HOME "${DOMAIN_ARR[@]}" \
 --fullchain-file "/ssl/${CERTFILE}" \
 --key-file "/ssl/${KEYFILE}" \
