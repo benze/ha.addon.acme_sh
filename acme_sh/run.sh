@@ -8,7 +8,10 @@ CERTFILE=$(bashio::config 'certfile')
 DNS_PROVIDER=$(bashio::config 'dns.provider')
 DNS_ENVS=$(bashio::config 'dns.env')
 DOMAIN_ALIAS=$(bashio::config 'domain_alias')
-ACME_HOME=$(bashio::config 'data_folder' '/data')
+ACME_HOME=$(bashio::config 'data_folder' '/data/acme')
+
+[ ! -d "$ACME_HOME" ] && mkdir -p $ACME_HOME
+bashio::log.info "Certification information written to $ACME_HOME"
 
 for env in $DNS_ENVS; do
     export $env
